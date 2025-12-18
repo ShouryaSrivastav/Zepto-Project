@@ -1,0 +1,57 @@
+
+
+create database zepto
+
+use zepto
+
+select * from [dbo].[zepto_v2]
+
+select * from INFORMATION_SCHEMA.columns where TABLE_NAME = 'zepto_v2'
+
+select count(*) from zepto_v2
+where category is null or Category = 'unknown' or Category = ''
+
+select count(*) from zepto_v2
+where name is null or name = 'unknown' or name = ''
+
+select count(*) from zepto_v2
+where mrp is null or mrp = 0
+
+select * from zepto_v2
+where mrp = 0
+
+delete from zepto_v2
+where Category = 'Home & Cleaning' and name = 'Cherry Blossom Liquid Shoe Polish Neutral'
+
+select count(*) from zepto_v2
+where discountPercent is null 
+
+select count(*) from zepto_v2
+where discountedSellingPrice is null or discountedSellingPrice = 0
+
+select * from zepto_v2
+where discountedSellingPrice = 0
+
+select count(*) from zepto_v2
+where weightInGms is null 
+
+
+select count(*) from zepto_v2
+where weightInGms = 0
+
+select * from zepto_v2
+where weightInGms = 0
+
+update zepto_v2
+set weightInGms = 5
+where weightInGms = 0
+
+select count(*) from zepto_v2
+where outOfStock = 1
+
+
+select count(*) from zepto_v2
+where quantity = null
+
+
+	
