@@ -1,6 +1,6 @@
 # 🚀 Zepto Sales Analytics Dashboard
 
-🔗 **Dashboard Link:** [https://app.powerbi.com/view?r=eyJrIjoiOWQ2MjIwMTEtN2FmYi00OGM0LThkYTYtNjZmNDY0NGJmN2RjIiwidCI6IjZiNGQwNDQ4LTc5MGMtNGQ5MS1iZjY3LTg5ZDk1NmJlNDEwYSJ9&pageName=6ac9fb54130462a9ddae]
+🔗 **Interactive Dashboard:** [View Live Report](https://app.powerbi.com/view?r=eyJrIjoiOWQ2MjIwMTEtN2FmYi00OGM0LThkYTYtNjZmNDY0NGJmN2RjIiwidCI6IjZiNGQwNDQ4LTc5MGMtNGQ5MS1iZjY3LTg5ZDk1NmJlNDEwYSJ9&pageName=6ac9fb54130462a9ddae)
 
 ---
 
@@ -33,12 +33,20 @@ Based on the dashboard analysis, the following high-level indicators are tracked
 
 ## 🔧 Workflow & Technical Steps
 
-### 1️⃣ Data Cleaning & ETL (SQL & Power Query)
-* **SQL Server (SSMS):** Imported the raw Kaggle dataset to handle initial data cleaning, removing missing records and ensuring categorical consistency.
-* **Data Enrichment (Excel):** Generated a custom **Order Date** dataset using the `RANDBETWEEN` function to simulate transactional dates for the year 2025.
-* **Power Query Transformations:** * Added an **Index Column** to ensure row-level uniqueness for advanced modeling.
-    * Performed **Data Type Correction** (Currency, Whole Numbers, Dates) to ensure calculation accuracy.
-    * Used **Merge Queries** to join the generated Order Dates with the primary sales data, enabling time-series analysis.
+### 1️⃣ Data Cleaning & Integrity (SQL Server)
+I used **SSMS** to perform deep data cleaning and validation:
+* **Database Setup:** Created the `zepto` database and audited the schema using `INFORMATION_SCHEMA.columns`.
+* **Handling Nulls & Blanks:** Ran validation queries to identify missing values in `Category`, `Name`, and `MRP`.
+* **Data Sanitization:** * Removed specific inconsistent records (e.g., *Cherry Blossom Liquid Shoe Polish* entries).
+    * Investigated and resolved zero-value anomalies in `discountedSellingPrice`.
+* **Value Correction:** Identified records with `0g` weight and updated them to a baseline of `5g` to maintain distribution accuracy.
+
+### 2️⃣ Advanced ETL (Power Query Editor)
+After initial SQL cleaning, the data was shaped in Power BI:
+* **Schema Refinement:** Performed **Data Type Conversion** (Currency, Whole Numbers, Dates) to ensure calculation integrity.
+* **Feature Engineering:** Added an **Index Column** to ensure each row has a unique identifier for granular modeling.
+* **Data Enrichment (The Merge):** * Created a custom **Order Date** sheet in Excel using `RANDBETWEEN` to simulate transactional dates for 2025.
+    * Performed a **Left Outer Join** between the Zepto dataset and the Date sheet using `Index` and `ID` to enable time-series analysis.
 
 ### 2️⃣ Advanced DAX Measures
 Created dynamic measures to drive the interactive visuals:
@@ -52,19 +60,19 @@ Created dynamic measures to drive the interactive visuals:
 ## 📊 Dashboard Preview & Insights
 
 ### 📄 Page 1: Sales & Discount Overview
-![Sales & Discount Overview](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%201%20-%20Overview%20.png)
+![Sales & Discount Overview](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%201%20-%20Overview%20.png?raw=true)
 
 * **Visuals:** KPI cards, Category-wise Average Discount, and MRP vs. Discounted Price.
 * **Key Insight:** **Fruits & Vegetables** receive the highest average discount (15.5%), despite being a bottom-performing category by sales.
 
 ### 📄 Page 2: Top/Bottom 5 Analysis
-![Top Bottom Analysis](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%202%20-%20Top%20Bottom%20Analysis.png)
+![Top Bottom Analysis](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%202%20-%20Top%20Bottom%20Analysis.png?raw=true)
 
-* **Visuals:** Four-quadrant bar chart analysis.
+* **Visuals:** Six bar chart analysis.
 * **Key Insight:** **Cooking Essentials** and **Munchies** are top performers in both quantity sold and available stock, suggesting high demand and efficient restocking.
 
 ### 📄 Page 3: Business Insights & Monthly Trends
-![Monthly Trends](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%203%20-%20Business%20Insights%20%26%20Trends.png)
+![Monthly Trends](https://github.com/ShouryaSrivastav/Zepto-Project/blob/5ccb8a43d76a5287238f59a3e1d983164fc99f61/Page%203%20-%20Business%20Insights%20%26%20Trends.png?raw=true)
 
 * **Visuals:** Monthly Sales/Quantity bar charts and Category Sales Contribution donut chart.
 * **Key Insight:** **Packaged Food**, **Ice Cream**, and **Chocolates** each contribute 21.9% to total sales, dominating the revenue share.
@@ -72,14 +80,11 @@ Created dynamic measures to drive the interactive visuals:
 ---
 
 ## 🛠️ Tools & Technologies
-* **Power BI Desktop:** Dashboard design, Data Visualization, and DAX.
-* **SQL Server (SSMS):** Backend data cleaning and ETL.
-* **Power Query:** Data transformation, Indexing, and Merging.
+* **SQL Server (SSMS):** Backend data cleaning and data integrity validation.
+* **Power BI Desktop:** Dashboard design, Power Query (Merging/Indexing), and DAX.
 * **Microsoft Excel:** Data sourcing and date generation via formulas.
 
 ---
 
 ## ✅ Conclusion
-The **Zepto Sales Analytics Dashboard** demonstrates a complete end-to-end data analytics workflow. It successfully transforms raw data into actionable insights, highlighting the "high-discount vs. low-sales" paradox in certain categories and providing a clear roadmap for inventory and promotional optimization.
-
----
+The **Zepto Sales Analytics Dashboard** demonstrates a complete end-to-end data analytics workflow. It successfully transforms raw, messy data into actionable insights, highlighting the "high-discount vs. low-sales" paradox in certain categories and providing a clear roadmap for inventory and promotional optimization.
