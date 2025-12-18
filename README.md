@@ -33,22 +33,25 @@ Based on the dashboard analysis, the following high-level indicators are tracked
 
 ## 🔧 Workflow & Technical Steps
 
-### 1️⃣ Data Cleaning & Integrity (SQL Server)
-I used **SSMS** to perform deep data cleaning and validation:
+### 1️⃣ Data Ingestion & Cleaning (SQL Server)
+The process began by downloading the raw **Zepto dataset from Kaggle** and importing the flat file into **SSMS** for robust data handling:
 * **Database Setup:** Created the `zepto` database and audited the schema using `INFORMATION_SCHEMA.columns`.
 * **Handling Nulls & Blanks:** Ran validation queries to identify missing values in `Category`, `Name`, and `MRP`.
 * **Data Sanitization:** * Removed specific inconsistent records (e.g., *Cherry Blossom Liquid Shoe Polish* entries).
     * Investigated and resolved zero-value anomalies in `discountedSellingPrice`.
 * **Value Correction:** Identified records with `0g` weight and updated them to a baseline of `5g` to maintain distribution accuracy.
 
-### 2️⃣ Advanced ETL (Power Query Editor)
-After initial SQL cleaning, the data was shaped in Power BI:
+### 2️⃣ Connecting SSMS to Power BI
+After finalizing the data cleaning in SQL Server, I **established a direct connection between SSMS and Power BI Desktop**. This ensured that the cleaned and sanitized tables were imported directly into the Power BI environment, maintaining data integrity and allowing for seamless refreshes between the SQL backend and the visualization frontend.
+
+### 3️⃣ Advanced ETL (Power Query Editor)
+Once the data was connected, it was further shaped in Power BI:
 * **Schema Refinement:** Performed **Data Type Conversion** (Currency, Whole Numbers, Dates) to ensure calculation integrity.
 * **Feature Engineering:** Added an **Index Column** to ensure each row has a unique identifier for granular modeling.
 * **Data Enrichment (The Merge):** * Created a custom **Order Date** sheet in Excel using `RANDBETWEEN` to simulate transactional dates for 2025.
     * Performed a **Left Outer Join** between the Zepto dataset and the Date sheet using `Index` and `ID` to enable time-series analysis.
 
-### 2️⃣ Advanced DAX Measures
+### 4️⃣ Advanced DAX Measures
 Created dynamic measures to drive the interactive visuals:
 * `Total Sales`, `Total Orders`, and `Avg Sales Per Order`.
 * `Average Discount %` by Category and Month.
